@@ -1,0 +1,49 @@
+-This program is a CLI to track any number of tennis matches. To run:
+python3 main.py
+-There are four layers of scope this CLI is broken down by. Two commands are able to run in ANY scope:
+    -["help", "quit"]
+    -"help" displays eligible commands for the current scope.
+    -"quit" terminates the program.
+
+    -The upper most layer is "TRACKER". Eligible commands are:
+        ["add match", "print matches", "switch"]
+        -"add match" adds a match to the Tracker
+            -Three possible match types
+                -Best of 3 matches
+                -Best of 5 matches
+                -Best of 5 matches, Grand Slam rules. Tiebreaker games here are played to 10 instead of 7
+        -"print matches" prints all matches in the Tracker
+        -"switch" dives into a match to explore its contents and edit its scores
+
+    -The second layer is "MATCH". Eligible commands are:
+        ["add set", "add set tiebreaker", "switch", "status", "reset", "print sets", "up"]
+        -"add set" adds an advantage set to the current match
+        -"add set tiebreaker" adds a tiebreaker set to the current match
+        -"switch" dives into a set to explore its contents and edit its scores
+        -"status" prints the status of the current match
+        -"reset" sets the match to empty
+        -"print sets" prints all sets in the current match
+        -"up" goes up one level to a higher scope
+
+    -The third layer is "SET". Eligible commands are:
+        ["add game", "switch", "status", "reset", "print games", "up"]
+        -"add game" adds a game to the current match
+            -If a tiebreaker set AND there are already 12 games in the set, a tiebreaker game is added instead
+        -"switch" dives into a game to explore its contents and edit its scores
+        -"status" prints the status of the current set
+        -"reset" sets the set to empty
+        -"print games" prints all games in the current set
+        -"up" goes up one level to a higher scope
+
+    -The lowest layer is "GAME". Eligible commands are:
+        ["add score", "status", "reset", "up"]
+        -"add score" adds a point to one player in the current game
+        -"status" prints the status of the current game
+        -"reset" sets the game to empty
+        -"up" goes up one level to a higher scope
+
+There are testing functions as well decorated with the @disabled decorator. These are to quickly add point to a game or set and are meant for testing only.
+
+Possible improvements:
+1) import tkinter and make an interactable GUI
+2) eliminate the "switch" command. Would need to add logic to understand which exact scope to dive into
